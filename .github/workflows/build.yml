@@ -35,6 +35,9 @@ jobs:
       - name: Set timestamp
         run: echo "TS=$(date +"%y%m%d.%H%M")" >> $GITHUB_ENV
 
+      - name: Rename firmware
+        run: mv build/xiaozhi_vn.bin build/firmware-${{ env.TS }}.bin
+
       - name: Upload firmware
         uses: actions/upload-artifact@v4
         with:
