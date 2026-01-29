@@ -22,7 +22,7 @@ jobs:
         run: |
           echo "IDF_PATH=$IDF_PATH"
           ls $IDF_PATH
-          
+
       - name: Checkout source
         uses: actions/checkout@v4
 
@@ -31,3 +31,12 @@ jobs:
           . $IDF_PATH/export.sh
           idf.py set-target esp32s3
           idf.py build
+
+      - name: Set timestamp
+        run: echo "TS=$(date +"%y%m%d.%H%M")" >> $GITHUB_ENV
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: build/firmware-${{ env.TS }}.bin
