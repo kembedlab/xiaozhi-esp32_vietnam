@@ -1,4 +1,4 @@
-name: Build Boards
+name: Build ESP32
 
 on:
   push:
@@ -11,33 +11,17 @@ permissions:
   contents: read
 
 jobs:
-  prepare:
-    name: checkout
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
   build:
-    name: Build
-    needs: prepare
     runs-on: ubuntu-latest
+
     container:
       image: espressif/idf:release-v5.5
+
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: bash script run
-        shell: bash
+      - name: Build project
         run: |
+          idf.py set-target esp32s3
           idf.py build
-
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: xiaozhi_${{ matrix.name }}_${{ github.sha }}.bin
-      #     path: build/merged-binary.bin
-      #     if-no-files-found: error
