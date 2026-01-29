@@ -18,6 +18,11 @@ jobs:
       image: espressif/idf:release-v5.5
 
     steps:
+      - name: Check ESP-IDF
+        run: |
+          echo "IDF_PATH=$IDF_PATH"
+          ls $IDF_PATH
+          
       - name: Checkout source
         uses: actions/checkout@v4
 
